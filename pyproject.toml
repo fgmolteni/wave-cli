@@ -1,0 +1,10 @@
+[project]
+name = "cli-lora"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "click>=8.2.1",
+    "rich>=14.1.0",
+]
