@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-LoRa CLI - Command Line Interface for LoRa operations
+Wave CLI - Command Line Interface for LoRa operations
 Con modo interactivo completo usando Click y Rich
 """
 
@@ -16,28 +16,31 @@ from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.prompt import Confirm, Prompt
 from rich.text import Text
 
+from constant.info import version
+from constant.colors import banner
+
 # Inicializar consola Rich
 console = Console()
 
-# Banner ASCII para LoRa CLI
+# Banner ASCII para Wave CLI
 BANNER = """
-██╗      ██████╗ ██████╗  █████╗      ██████╗██╗     ██╗
-██║     ██╔═══██╗██╔══██╗██╔══██╗    ██╔════╝██║     ██║
-██║     ██║   ██║██████╔╝███████║    ██║     ██║     ██║
-██║     ██║   ██║██╔══██╗██╔══██║    ██║     ██║     ██║
-███████╗╚██████╔╝██║  ██║██║  ██║    ╚██████╗███████╗██║
-╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝     ╚═════╝╚══════╝╚═╝
+██╗    ██╗ █████╗ ██╗   ██╗███████╗     ██████╗██╗     ██╗
+██║    ██║██╔══██╗██║   ██║██╔════╝    ██╔════╝██║     ██║
+██║ █╗ ██║███████║██║   ██║█████╗      ██║     ██║     ██║
+██║███╗██║██╔══██║╚██╗ ██╔╝██╔══╝      ██║     ██║     ██║
+╚███╔███╔╝██║  ██║ ╚████╔╝ ███████╗    ╚██████╗███████╗██║
+ ╚══╝╚══╝ ╚═╝  ╚═╝  ╚═══╝  ╚══════╝     ╚═════╝╚══════╝╚═╝
 """
 
 def print_banner():
     """Imprime el banner con Rich"""
-    banner_text = Text(BANNER, style="cyan bold")
+    banner_text = Text(BANNER, style=banner)
     
     panel = Panel.fit(
         banner_text,
-        title="[bold yellow]LoRa CLI v1.0[/bold yellow]",
+        title=f"[bold yellow]Wave CLI {version}[/bold yellow]",
         subtitle=f"[green]Iniciado: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}[/green]",
-        border_style="blue"
+        border_style="white"
     )
     
     console.print(panel)
@@ -67,7 +70,7 @@ interactive_mode = False
 @click.option('--interactive', '-i', is_flag=True, help='Modo interactivo')
 def cli(ctx, version, interactive):
     """
-    LoRa CLI - Interfaz de línea de comandos para comunicaciones LoRa
+    Wave CLI - Interfaz de línea de comandos para comunicaciones LoRa
     
     Herramienta para gestionar módulos LoRa, enviar/recibir mensajes
     y configurar parámetros de comunicación.
@@ -75,7 +78,7 @@ def cli(ctx, version, interactive):
     global interactive_mode
     
     if version:
-        console.print("[bold green]LoRa CLI v1.0[/bold green]")
+        console.print("[bold green]Wave CLI v1.0[/bold green]")
         return
     
     if interactive or ctx.invoked_subcommand is None:
@@ -102,7 +105,7 @@ def start_interactive_mode():
         try:
             # Prompt personalizado con Rich
             user_input = Prompt.ask(
-                "[bold cyan]LoRa CLI[/bold cyan]",
+                "[bold cyan]Wave CLI[/bold cyan]",
                 console=console
             ).strip()
             
