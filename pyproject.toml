@@ -1,10 +1,18 @@
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
 [project]
-name = "cli-lora"
+name = "wave-cli"
 version = "0.1.0"
-description = "Add your description here"
+description = "LoRa MQTT message visualizer and device monitoring system"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "click>=8.2.1",
     "rich>=14.1.0",
 ]
+
+[tool.maturin]
+features = ["pyo3/extension-module"]
+module-name = "wave_cli.wave_core"
