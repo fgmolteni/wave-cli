@@ -8,11 +8,129 @@ version = "0.1.0"
 description = "LoRa MQTT message visualizer and device monitoring system"
 readme = "README.md"
 requires-python = ">=3.10"
+license = "MIT"
+authors = [
+    {name = "Wave CLI Team"}
+]
+keywords = ["lora", "mqtt", "iot", "monitoring", "cli"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Rust",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Communications",
+    "Topic :: System :: Monitoring",
+]
+
 dependencies = [
     "click>=8.2.1",
     "rich>=14.1.0",
+    "prompt_toolkit>=3.0.43",
 ]
+
+[project.optional-dependencies]
+dev = [
+    "maturin>=1.9.4",
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "mypy>=1.5.0",
+    "flake8>=6.0.0",
+    "pytest-asyncio>=0.21.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/fgmolteni/wave-cli"
+Documentation = "https://github.com/fgmolteni/wave-cli/tree/main/docs"
+Repository = "https://github.com/fgmolteni/wave-cli.git"
+"Bug Tracker" = "https://github.com/fgmolteni/wave-cli/issues"
+
+[project.scripts]
+wave-cli = "wave_cli.main:main"
 
 [tool.maturin]
 features = ["pyo3/extension-module"]
-module-name = "wave_cli.wave_core"
+module-name = "wave_core"
+
+# Configuración de herramientas de desarrollo
+
+[tool.black]
+line-length = 88
+target-version = ['py310', 'py311', 'py312']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+known_first_party = ["wave_cli"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers"
+testpaths = ["tests"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "mqtt: marks tests that require MQTT broker",
+]
+
+[tool.coverage.run]
+source = ["wave_cli"]
+omit = [
+    "tests/*",
+    "*/site-packages/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]

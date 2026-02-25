@@ -27,13 +27,43 @@ LoRa CLI es una interfaz de línea de comandos que actúa como gestor de disposi
 - Python >= 3.10
 
 ## Instalación
+```bash
+# 1) Instalar dependencias del proyecto
+uv sync --extra dev
+
+# 2) Compilar e instalar el core Rust (wave_core)
+uv run maturin develop
 ```
-# Instrucciones de instalación próximamente
-```
-.
+
 ## Uso
 ```bash
-# Ejemplos de uso próximamente
+# Iniciar CLI interactiva
+uv run main.py
+
+# O con Makefile (prepara entorno + compila core)
+make run-real
+```
+
+### Flujo rápido para MQTT real
+
+Una vez dentro de la CLI interactiva (prompt wave(...):):
+
+```text
+connect test.mosquitto.org --port 1883
+monitor --topic "#"
+```
+
+### ¿Dónde se escribe cada comando?
+
+- Comandos del sistema (terminal Linux): uv ..., make ...
+- Comandos de Wave CLI (dentro del prompt interactivo): connect, monitor, messages, subscribe, exit
+
+Ejemplo de sesión:
+
+```text
+$ uv run main.py
+wave(mqtt:off,lora:sim): connect test.mosquitto.org --port 1883
+wave(mqtt:on,lora:core): monitor --topic "#"
 ```
 
 ## Licencia

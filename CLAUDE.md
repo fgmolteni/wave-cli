@@ -131,3 +131,4 @@ wave-cli/
 - **Actual**: Simulación completa en Python
 - **Objetivo**: Core real en Rust + UI Python optimizada
 - **Migración**: Gradual, manteniendo compatibilidad de comandos
+- no incluyas referencias a claude-code en los commit, issus y documentacion
